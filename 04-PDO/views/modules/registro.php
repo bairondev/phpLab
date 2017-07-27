@@ -1,3 +1,15 @@
+<?php
+$registro = new MvcController();
+$registro -> registroUsuarioController();
+
+if (isset($_GET["action"])) 
+{
+	if($_GET["action"] == "ok"){
+
+		echo "¡Registro Existoso!";
+	}
+}
+?>
 <h2>Registro</h2>
 
 <form method="post">
@@ -15,16 +27,3 @@
 	<br>
 	<input type="submit" value="Enviar">
 </form>
-
-<?php
-$registro = new MvcController();
-$registro -> registroUsuarioController();
-
-if (isset($_GET["action"])) 
-{
-	if($_GET["action"] == "ok"){
-
-		echo "¡Registro Existoso!";
-	}
-}
-?>

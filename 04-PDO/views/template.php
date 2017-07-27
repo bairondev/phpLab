@@ -44,16 +44,13 @@
 <body>
 <header>
 	<h2>Logo</h2>
-
 	<?php include "modules/nav.php" ?>
 	</header>
 <section>
-	<p>
-		<?php 
-			$mvc = new MvcController();
-			$mvc -> enlacesPaginasController();
-		?>
-	</p>
+<?php 
+	$mvc = new MvcController();
+	$mvc -> enlacesPaginasController();
+?>
 </section>
 	
 </body>

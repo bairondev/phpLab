@@ -51,7 +51,7 @@ class MvcController
 			{
 				header("location:index.php?action=ingreso");
 			}else{
-				header ("location:registro.php");			
+				header ("location:registro.php");
 			}
 		}
 	}
