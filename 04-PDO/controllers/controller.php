@@ -23,7 +23,7 @@ class MvcController
 		} else{
 			$linkController = "index";
 		}
-		
+
 		$respuesta = EnlacesPaginas::enlacesPaginasModel( $linkController );
 
 		include $respuesta;
@@ -47,9 +47,11 @@ class MvcController
 
 			// echo $respuesta;
 
+			// printVar($respuesta , "Respuesta");
+
 			if($respuesta == "success")
 			{
-				header("location:index.php?action=ingreso");
+				header("location:index.php?action=ok");
 			}else{
 				header ("location:registro.php");
 			}
