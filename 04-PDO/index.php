@@ -1,4 +1,5 @@
 <?php
+ob_start();
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 
 require_once "models/model.php";
