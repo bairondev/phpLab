@@ -1,14 +1,23 @@
+<?php
+	session_start();
+
+	if(!$_SESSION["validar"])
+	{
+		header("location:index.php?action=ingreso");
+		exit();
+	}
+?>
 <h2>Usuarios</h2>
 <table>
 	<tr>
-		<td>ID</td>
 		<td>Usuario</td>
 		<td>Contraseña</td>
 		<td>Correo</td>
+		<td>Editar</td>
+		<td>Eliminar</td>
 	</tr>
-	<?php 
-	$verUsuarios = new MvcController();
-	$verUsuarios->verUsuariosController();
-
+	<?php
+		$verUsuarios = new MvcController();
+		$verUsuarios->verUsuariosController();
 	?>
 </table>

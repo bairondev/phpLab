@@ -47,11 +47,11 @@
 	<?php include "modules/nav.php" ?>
 	</header>
 <section>
-<?php 
+<?php
 	$mvc = new MvcController();
 	$mvc -> enlacesPaginasController();
 ?>
 </section>
-	
+
 </body>
 </html>

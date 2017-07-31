@@ -73,12 +73,15 @@ class MvcController
 
 			$respuesta = Datos::loginUsuarios($datosController, "usuarios");
 
-			// echo $respuesta;
 
 			// printVar($respuesta["usuario"] , "Respuesta");
 
 			if($respuesta["usuario"] == $_POST['usuario'] && $respuesta["password"] == $_POST['password'])
 			{
+				//  Inicializamos la var Seccion para acceder al contenido.
+				session_start();
+				$_SESSION["validar"] = true;
+
 				header("location:index.php?action=usuarios");
 			}else{
 				header ("location:index.php?action=fallo");
@@ -92,19 +95,55 @@ class MvcController
 	public function verUsuariosController ()
 	{
 		$respuesta = Datos::verUsuarios("usuarios");
-
+		//  Iteramos el arreglo con los datos
 		foreach ($respuesta as $usuario => $value) {
 			echo "<tr>";
-			echo "<td>".$value["id"]."</td>";
 			echo "<td>".$value["usuario"]."</td>";
 			echo "<td>".$value["password"]."</td>";
 			echo "<td>".$value["email"]."</td>";
+			echo "<td> <a href='index.php?action=editar&id=".$value["id"]."'>Editar</a></td>";
+			echo "<td> <a href='#'>Eliminar</a></td>";
 			echo "</tr>";
 		}
 
-		// echo $respuesta;
+		// printVar($respuesta, "Ver Usuarios");
+	}
 
-		printVar($respuesta, "Ver Usuarios");
+	# Editar Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function editarUsuariosController ()
+	{
+		$datos = $_GET['id'];
+		$respuesta = Datos::editarUsuarios($datos, "usuarios");
+		// Creamos los campos para cargar la info del usuario.
+		echo "<input type='hidden' value='".$respuesta['id']."' name='idEditar'/>";
+		echo "Usuario: <br> <input type='text' name='usuarioEditar'  value='".$respuesta['usuario']."'/><br>";
+		echo "Password: <br> <input type='text' name='passwordEditar'  value='".$respuesta['password']."'/><br>";
+		echo "Email: <br> <input type='text' name='emailEditar'  value='".$respuesta['email']."'/><br>";
+		echo "<br> <input type='submit' value='Actualizar Datos'>";
+
+
+		printVar($respuesta['email'], "Información Usuario");
+	}
+
+	# Actualizar Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function actualizarUsuariosController ()
+	{
+
+		if (isset($_POST['usuarioEditar'])) {
+			$datosController = array(
+					'id' 		=>	$_POST["idEditar"] ,
+					'usuario' 	=>	$_POST["usuarioEditar"] ,
+					'password' 	=> 	$_POST["passwordEditar"],
+					'email' 		=> 	$_POST["emailEditar"]
+				 );
+		}
+
+
+		printVar($respuesta['email'], "Información Usuario");
 	}
 
 }

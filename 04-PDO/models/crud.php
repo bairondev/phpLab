@@ -24,6 +24,9 @@ class Datos extends Conexion {
 			return "Error";
 		}
 
+		//  close(); = para cerrar de forma segura las conexiones
+		$stmt->close();
+
 	}
 
 	# Login Usuarios
@@ -31,11 +34,13 @@ class Datos extends Conexion {
 
 	public function loginUsuarios($datos, $tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT usuario, password FROM $tabla");
+		$stmt = Conexion::conectar()->prepare("SELECT usuario, password FROM $tabla WHERE usuario = :usuario");
 		$stmt -> bindParam("usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt -> execute();
 
 		return $stmt->fetch();
+
+		$stmt->close();
 	}
 
 	# Ver Usuarios
@@ -47,6 +52,22 @@ class Datos extends Conexion {
 		$stmt -> execute();
 
 		return $stmt->fetchAll();
+
+		$stmt->close();
+	}
+
+	# Editar Usuario
+	# ----------------------------------------------------------------------------------
+
+	public function editarUsuarios($datos, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT id, usuario, password, email  FROM $tabla WHERE id = :id");
+		$stmt->bindParam(":id", $datos, PDO::PARAM_INT);
+		$stmt -> execute();
+
+		return $stmt->fetch();
+
+		$stmt->close();
 	}
 
 }
