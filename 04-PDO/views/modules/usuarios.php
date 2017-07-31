@@ -1,4 +1,14 @@
-<h2>Contact</h2>
-<p>
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos aliquid nobis ex ullam inventore maxime earum ad officiis assumenda facere, vitae repellendus necessitatibus, labore tenetur dignissimos optio neque provident quae?
-</p>
+<h2>Usuarios</h2>
+<table>
+	<tr>
+		<td>ID</td>
+		<td>Usuario</td>
+		<td>Contraseña</td>
+		<td>Correo</td>
+	</tr>
+	<?php 
+	$verUsuarios = new MvcController();
+	$verUsuarios->verUsuariosController();
+
+	?>
+</table>

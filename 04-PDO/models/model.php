@@ -18,12 +18,20 @@ class EnlacesPaginas{
 			
 			$module = "views/modules/home.php";
   
-		}else if ($linkModel == "ok")
+		}
+		else if ($linkModel == "ok")
 		{ 
 
 			$module = "views/modules/registro.php";
 
-		}else{
+		}
+		else if ($linkModel == "fallo")
+		{ 
+
+			$module = "views/modules/ingreso.php";
+
+		}
+		else{
 
 			$module = "views/modules/home.php";
 

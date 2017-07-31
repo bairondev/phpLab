@@ -33,7 +33,8 @@ class MvcController
 	# Registro de Usuarios
 	# ----------------------------------------------------------------------------------
 
-	public function registroUsuarioController(){
+	public function registroUsuarioController()
+	{
 
 		if(isset($_POST["usuario"]))
 		{
@@ -57,5 +58,54 @@ class MvcController
 			}
 		}
 	}
+
+	# Login de Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function loginUsuariosController ()
+	{
+		if(isset($_POST["usuario"]))
+		{
+			$datosController = array(
+					'usuario' 	=>	$_POST["usuario"] ,
+					'password' 	=> 	$_POST["password"]
+				 );
+
+			$respuesta = Datos::loginUsuarios($datosController, "usuarios");
+
+			// echo $respuesta;
+
+			// printVar($respuesta["usuario"] , "Respuesta");
+
+			if($respuesta["usuario"] == $_POST['usuario'] && $respuesta["password"] == $_POST['password'])
+			{
+				header("location:index.php?action=usuarios");
+			}else{
+				header ("location:index.php?action=fallo");
+			}
+		}
+	}
+
+	# Consultar Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function verUsuariosController ()
+	{
+		$respuesta = Datos::verUsuarios("usuarios");
+
+		foreach ($respuesta as $usuario => $value) {
+			echo "<tr>";
+			echo "<td>".$value["id"]."</td>";
+			echo "<td>".$value["usuario"]."</td>";
+			echo "<td>".$value["password"]."</td>";
+			echo "<td>".$value["email"]."</td>";
+			echo "</tr>";
+		}
+
+		// echo $respuesta;
+
+		printVar($respuesta, "Ver Usuarios");
+	}
+
 }
 ?>

@@ -1,4 +1,11 @@
 <?php
+function printVar( $variable, $title = "" )
+{
+  $var = print_r( $variable, true );
+  echo "<pre style='background-color:#f1f1f3;color:#339c9a; border: dashed thin #42c2c0;'><strong>[$title]</strong> $var</pre>";
+}
+
+
 // ob_start() funcion de PHP para solucionar los problemas con los header();
 ob_start();
 

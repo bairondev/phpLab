@@ -7,7 +7,8 @@ class Datos extends Conexion {
 	# Registro de usuarios
 	# ----------------------------------------------------------------------------------
 
-	public function registroUsuarioModel ($datos, $tabla){
+	public function registroUsuarioModel ($datos, $tabla)
+	{
 		// prepare(); = le pasamos el query del SQL para realizar nuestra consulta.
 		$stmt = Conexion::conectar()->prepare( "INSERT INTO $tabla (usuario, password, email)
 			VALUES (:usuario, :password, :email)" );
@@ -23,6 +24,29 @@ class Datos extends Conexion {
 			return "Error";
 		}
 
+	}
+
+	# Login Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function loginUsuarios($datos, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT usuario, password FROM $tabla");
+		$stmt -> bindParam("usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt -> execute();
+
+		return $stmt->fetch();
+	}
+
+	# Ver Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function verUsuarios($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+		$stmt -> execute();
+
+		return $stmt->fetchAll();
 	}
 
 }
