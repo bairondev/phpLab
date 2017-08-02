@@ -124,7 +124,7 @@ class MvcController
 		echo "<br> <input type='submit' value='Actualizar Datos'>";
 
 
-		printVar($respuesta['email'], "Información Usuario");
+		printVar($respuesta, "Información Usuario");
 	}
 
 	# Actualizar Usuarios
@@ -142,8 +142,15 @@ class MvcController
 				 );
 		}
 
+		$respuesta = Datos::actualizarUsuarios($datosController, "usuarios");
+		
+		if($respuesta == "success")
+			{
+				header("location:index.php?action=cambio");
+			}else{
+				echo "Error al actualizar Dato";
+			}
 
-		printVar($respuesta['email'], "Información Usuario");
 	}
 
 }

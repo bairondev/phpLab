@@ -6,5 +6,6 @@
 
 $editar = new MvcController();
 $editar -> editarUsuariosController();
+$editar -> UsuariosController();
 
 ?>

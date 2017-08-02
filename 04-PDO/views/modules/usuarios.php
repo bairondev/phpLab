@@ -21,3 +21,15 @@
 		$verUsuarios->verUsuariosController();
 	?>
 </table>
+<?php 
+
+	if(isset($_GET["action"]))
+	{
+		if($_GET["action"] == "cambio")
+		{
+			echo "Cambio Exitoso";
+		}
+
+	}
+
+?>

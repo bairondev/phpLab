@@ -70,5 +70,26 @@ class Datos extends Conexion {
 		$stmt->close();
 	}
 
+	# Actualizar Usuario
+	# ----------------------------------------------------------------------------------
+
+	public function actualizarUsuarios($datos, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET usuario = :usuario, password = :password, email = :email WHERE id = :id");
+
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "success";
+		} else {
+			return "Error";
+		}
+
+		$stmt->close();
+	}
+
 }
 ?>
