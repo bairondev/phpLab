@@ -80,6 +80,25 @@ class Datos extends Conexion {
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+		printVar($stmt->execute(), "Modelo");
+
+		if($stmt->execute()){
+			return "success";
+		} else {
+			return "Error";
+		}
+
+		$stmt->close();
+	}
+
+	# Eliminar Usuario
+	# ----------------------------------------------------------------------------------
+
+	public function eliminarUsuarios($datos, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 		$stmt->bindParam(":id", $datos, PDO::PARAM_INT);
 
 		if($stmt->execute()){

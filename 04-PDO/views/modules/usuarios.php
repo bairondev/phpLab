@@ -19,17 +19,21 @@
 	<?php
 		$verUsuarios = new MvcController();
 		$verUsuarios->verUsuariosController();
+		$verUsuarios-> eliminarUsuariosController();
 	?>
 </table>
-<?php 
+<?php
 
-	if(isset($_GET["action"]))
+	if( isset($_GET["action"]) )
 	{
-		if($_GET["action"] == "cambio")
+		if( $_GET["action"] == "cambio" )
 		{
 			echo "Cambio Exitoso";
-		}
 
+		}else if( $_GET["action"] == "eliminado" )
+		{
+			echo "Usuario eliminado";
+		}
 	}
 
 ?>

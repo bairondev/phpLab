@@ -102,7 +102,7 @@ class MvcController
 			echo "<td>".$value["password"]."</td>";
 			echo "<td>".$value["email"]."</td>";
 			echo "<td> <a href='index.php?action=editar&id=".$value["id"]."'>Editar</a></td>";
-			echo "<td> <a href='#'>Eliminar</a></td>";
+			echo "<td> <a href='index.php?action=usuarios&idEliminar=".$value["id"]."'>Eliminar</a></td>";
 			echo "</tr>";
 		}
 
@@ -118,13 +118,11 @@ class MvcController
 		$respuesta = Datos::editarUsuarios($datos, "usuarios");
 		// Creamos los campos para cargar la info del usuario.
 		echo "<input type='hidden' value='".$respuesta['id']."' name='idEditar'/>";
-		echo "Usuario: <br> <input type='text' name='usuarioEditar'  value='".$respuesta['usuario']."'/><br>";
-		echo "Password: <br> <input type='text' name='passwordEditar'  value='".$respuesta['password']."'/><br>";
-		echo "Email: <br> <input type='text' name='emailEditar'  value='".$respuesta['email']."'/><br>";
-		echo "<br> <input type='submit' value='Actualizar Datos'>";
-
-
-		printVar($respuesta, "Información Usuario");
+		echo "<input type='text' name='usuarioEditar'  value='".$respuesta['usuario']."'/><br>";
+		echo "<input type='text' name='passwordEditar'  value='".$respuesta['password']."'/><br>";
+		echo "<input type='text' name='emailEditar'  value='".$respuesta['email']."'/><br><br>";
+		echo "<input type='submit' value='Actualizar Datos'>";
+		echo "<a href='index.php?action=usuarios'> Cancelar </a>";
 	}
 
 	# Actualizar Usuarios
@@ -134,22 +132,46 @@ class MvcController
 	{
 
 		if (isset($_POST['usuarioEditar'])) {
-			$datosController = array(
+			$datos = array(
 					'id' 		=>	$_POST["idEditar"] ,
 					'usuario' 	=>	$_POST["usuarioEditar"] ,
 					'password' 	=> 	$_POST["passwordEditar"],
 					'email' 		=> 	$_POST["emailEditar"]
 				 );
-		}
 
-		$respuesta = Datos::actualizarUsuarios($datosController, "usuarios");
-		
-		if($respuesta == "success")
+			$respuesta = Datos::actualizarUsuarios($datos, "usuarios");
+
+
+			if($respuesta == "success")
 			{
 				header("location:index.php?action=cambio");
 			}else{
 				echo "Error al actualizar Dato";
 			}
+
+		}
+	}
+
+	# Editar Usuarios
+	# ----------------------------------------------------------------------------------
+
+	public function eliminarUsuariosController ()
+	{
+		if (isset($_GET['idEliminar'])) {
+			$datos = $_GET['idEliminar'];
+
+			$respuesta = Datos::eliminarUsuarios($datos, "usuarios");
+
+			printVar($respuesta, "Eliminar 2");
+
+			if($respuesta == "success")
+			{
+				header("location:index.php?action=eliminado");
+			}else{
+				echo "Error al actualizar Dato";
+			}
+
+		}
 
 	}
 

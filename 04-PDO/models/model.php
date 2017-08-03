@@ -37,6 +37,24 @@ class EnlacesPaginas{
 			$module = "views/modules/editar.php";
 
 		}
+		else if ($linkModel == "eliminar")
+		{
+
+			$module = "views/modules/eliminar.php";
+
+		}
+		else if ($linkModel == "cambio")
+		{
+
+			$module = "views/modules/usuarios.php";
+
+		}
+		else if ($linkModel == "eliminado")
+		{
+
+			$module = "views/modules/usuarios.php";
+
+		}
 		else{
 
 			$module = "views/modules/home.php";
