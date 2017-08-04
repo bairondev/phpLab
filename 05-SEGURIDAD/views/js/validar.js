@@ -1,0 +1,3 @@
+function validarRegistro(){
+	return false;
+}
