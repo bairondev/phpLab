@@ -1,0 +1,37 @@
+body{
+	background: #515252;
+	color: #AEAEAE;
+	font-family: "Arial";
+}
+header{
+	background: #000;
+	padding: 20px;
+	box-sizing: border-box;
+	color: #fff;
+}
+h2, nav{
+	display: inline-block;
+	vertical-align: top;
+}
+h2{
+	width: 20%;
+}
+nav{
+	width: 78%;
+	text-align: right;
+}
+nav a{
+	color:#4EBAE5;
+	font-size: 18px;
+	text-align: center;
+	padding: 20px;
+	display: inline-block;
+	vertical-align: top;
+	width: auto;
+}
+section{
+	background: #000;
+	margin:3px 0;
+	padding: 20px;
+	color: #fff;
+}
