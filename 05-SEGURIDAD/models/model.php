@@ -25,6 +25,12 @@ class EnlacesPaginas{
 			$module = "views/modules/registro.php";
 
 		}
+		else if ($linkModel == "error")
+		{
+
+			$module = "views/modules/registro.php";
+
+		}
 		else if ($linkModel == "fallo")
 		{
 

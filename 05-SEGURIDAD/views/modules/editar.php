@@ -11,9 +11,8 @@
 <h2>Editar Usuario</h2>
 <br>
 
-<form method="post">
+<form method="post" onsubmit="return validarEditar();">
 <?php
-
 $editar = new MvcController();
 $editar -> editarUsuariosController();
 $editar -> actualizarUsuariosController();

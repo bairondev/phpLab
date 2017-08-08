@@ -2,21 +2,27 @@
 /**
 * Clase para el controlador global
 */
+
 class MvcController
 {
-	# Llamada a la plantilla
-	# ----------------------------------------------------------------------------------
+
+//#)- Var Globales			| --------------------------------------------------------------------------------------#
+	public $expName = '/^[a-zA-Z0-9]*$/';
+	public $expMail = '/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/';
+	//)- End |----------------------------------------------------------------------------------------------------------------#
+
+//#)- Llamada a la plantilla | ------------------------------------------------------------------------------------------#
 
 	public function template ()
 	{
 		include 'views/template.php';
 	}
+	//)-  	End |------------------------------------------------------------------------------------------------------------#
 
-	# Intereacción del Usuario
-	# ----------------------------------------------------------------------------------
+//#)- Intereacción del Usuario | --------------------------------------------------------------------------------------#
 
-	public function enlacesPaginasController(){
-
+	public function enlacesPaginasController()
+	{
 
 		if(isset($_GET["action"])){
 			$linkController = $_GET["action"];
@@ -29,38 +35,46 @@ class MvcController
 		include $respuesta;
 
 	}
+	//)-  	End |--------------------------------------------------------------------------------------------------------#
 
-	# Registro de Usuarios
-	# ----------------------------------------------------------------------------------
+//#)- Registro de Usuarios | --------------------------------------------------------------------------------------#
 
 	public function registroUsuarioController()
 	{
-
 		if(isset($_POST["usuario"]))
 		{
-			$datosController = array(
-					'usuario' 	=>	$_POST["usuario"] ,
-					'password' 	=> 	$_POST["password"],
-					'email' 		=> 	$_POST["email"]
-				 );
-
-			$respuesta = Datos::registroUsuarioModel($datosController, "usuarios");
-
-			// echo $respuesta;
-
-			// printVar($respuesta , "Respuesta");
-
-			if($respuesta == "success")
+			//  preg_macth(); = Realiza una comparación con una expresión regular.
+			if (preg_match($expName, $_POST["usuario"]) &&  preg_match($expName, $_POST["password"]) && preg_match($expMail, $_POST["email"]))
 			{
-				header("location:index.php?action=ok");
+
+				// crypt(); = devolverá el hash de un string utilizando el algoritmo estándar basado en DES de Unix o algoritmos alternativos que puedan estar disponibles en el sistema.
+
+				$encriptar = crypt($_POST["password"], '$2a$07$usesomesillystringforsalt$');
+
+				$datosController = array(
+						'usuario' 	=>	$_POST["usuario"] ,
+						'password' 	=> 	$encriptar,
+						'email' 		=> 	$_POST["email"]
+					 );
+
+				$respuesta = Datos::registroUsuarioModel($datosController, "usuarios");
+
+				// printVar($respuesta , "Respuesta");
+
+				if($respuesta == "success")
+				{
+					header("location:index.php?action=ok");
+				}else{
+					header ("location:registro.php");
+				}
 			}else{
-				header ("location:registro.php");
+				header("location:index.php?action=error");
 			}
 		}
 	}
+	//)-  	End |------------------------------------------------------------------------------------------------------------#
 
-	# Login de Usuarios
-	# ----------------------------------------------------------------------------------
+//#)- Login de Usuarios | ---------------------------------------------------------------------------------------------#
 
 	public function loginUsuariosController ()
 	{
@@ -88,8 +102,9 @@ class MvcController
 			}
 		}
 	}
+	//)-  	End |------------------------------------------------------------------------------------------------------------#
 
-	//##> 	Ver Usuarios		| --------------------------------------------------------------------------------------#
+//#)- 	Ver Usuarios		| --------------------------------------------------------------------------------------#
 
 	public function verUsuariosController ()
 	{
@@ -108,10 +123,9 @@ class MvcController
 		// printVar($respuesta, "Ver Usuarios");
 	}
 
-	// End |------------------------------------------------------------------------------------------------------------#	
+	//)-  	End |------------------------------------------------------------------------------------------------------------#
 
-
-	//#) Editar Usuarios 		|-----------------------------------------------------------------------------------------#
+//#)- Editar Usuarios 		|---------------------------------------------------------------------------------------#
 
 	public function editarUsuariosController ()
 	{
@@ -119,46 +133,47 @@ class MvcController
 		$respuesta = Datos::editarUsuarios($datos, "usuarios");
 		// Creamos los campos para cargar la info del usuario.
 		echo "<input type='hidden' value='".$respuesta['id']."' name='idEditar'/>";
-		echo "<input type='text' name='usuarioEditar'  value='".$respuesta['usuario']."'/><br>";
-		echo "<input type='text' name='passwordEditar'  value='".$respuesta['password']."'/><br>";
-		echo "<input type='text' name='emailEditar'  value='".$respuesta['email']."'/><br><br>";
+		echo "<input id='usuarioE' type='text' name='usuarioEditar'  maxlength='10' value='".$respuesta['usuario']."'/><br>";
+		echo "<input id='passwordE' type='text' name='passwordEditar'  maxlength='10' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' title='La contraseña debe tener minimo 8 caracteres entre ellos número, Mayuscula  y Minusculas' value='".$respuesta['password']."'/><br>";
+		echo "<input id='emailE' type='text' name='emailEditar'  maxlength='30' value='".$respuesta['email']."'/><br><br>";
 		echo "<input type='submit' value='Actualizar Datos'>";
+		echo "<div class='msnForm'></div>";
 		echo "<a href='index.php?action=usuarios'> Cancelar </a>";
 	}
 
-	//) End |------------------------------------------------------------------------------------------------------------------#	
+	//)- End |----------------------------------------------------------------------------------------------------------------#
 
-
-
-//##> 	Actualizar Usuarios	| --------------------------------------------------------------------------------------#
+//#)- Actualizar Usuarios	| --------------------------------------------------------------------------------------#
 
 	public function actualizarUsuariosController ()
 	{
 
-		if (isset($_POST['usuarioEditar'])) {
-			$datos = array(
-					'id' 		=>	$_POST["idEditar"] ,
-					'usuario' 	=>	$_POST["usuarioEditar"] ,
-					'password' 	=> 	$_POST["passwordEditar"],
-					'email' 		=> 	$_POST["emailEditar"]
-				 );
+		if (preg_match($expName, $_POST["usuarioEditar"]) &&  preg_match($expName, $_POST["passwordEditar"]) && preg_match($expMail, $_POST["emailEditar"]))
+		{
+			if (isset($_POST['usuarioEditar'])) {
+				$datos = array(
+						'id' 		=>	$_POST["idEditar"] ,
+						'usuario' 	=>	$_POST["usuarioEditar"] ,
+						'password' 	=> 	$_POST["passwordEditar"],
+						'email' 		=> 	$_POST["emailEditar"]
+					 );
 
-			$respuesta = Datos::actualizarUsuarios($datos, "usuarios");
+				$respuesta = Datos::actualizarUsuarios($datos, "usuarios");
 
+				if($respuesta == "success")
+				{
+					header("location:index.php?action=cambio");
+				}else{
+					echo "Error al actualizar Dato";
+				}
 
-			if($respuesta == "success")
-			{
-				header("location:index.php?action=cambio");
-			}else{
-				echo "Error al actualizar Dato";
 			}
-
 		}
 	}
 
-//##> 	End |------------------------------------------------------------------------------------------------------------#	
+	//)-  	End |------------------------------------------------------------------------------------------------------------#
 
-//##> 	Editar Usuarios		| --------------------------------------------------------------------------------------#
+//#)- 	Eliminar Usuarios		| --------------------------------------------------------------------------------------#
 
 	public function eliminarUsuariosController ()
 	{
@@ -178,9 +193,6 @@ class MvcController
 
 		}
 	}
-
-//##> 	End |------------------------------------------------------------------------------------------------------------#	
-
-
+	//)-  	End |------------------------------------------------------------------------------------------------------------#
 }
 ?>

@@ -29,6 +29,9 @@
 	{
 		if($_GET["action"] == "ok"){
 			echo "¡Registro Existoso!";
+	}else if($_GET["action"] == "error")
+	{
+		echo "Error al realizar el Registro";
 	}
 }
 ?>
