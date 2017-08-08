@@ -35,3 +35,8 @@ section{
 	padding: 20px;
 	color: #fff;
 }
+
+form input#usuarioR{
+	text-transform: lowercase;
+}
+

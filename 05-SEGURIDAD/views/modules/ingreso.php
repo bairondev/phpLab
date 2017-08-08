@@ -1,14 +1,15 @@
 <h2>Ingreso</h2>
 
-<form method="post">
+<form method="post" onsubmit="return validarIngreso()">
 	Usuario:
-	<input type="text" name="usuario"  placeholder="Usuario" required/>
+	<input  id="usuarioI" type="text" name="usuario"  placeholder="Usuario" maxlength="10" required/>
 	<br>
 	<br>
 	Contraseña:
-	<input type="password" name="password"  placeholder="Contraseña" required/>
+	<input id="passwordI"  type="password" name="password"  placeholder="Contraseña" maxlength="10" required/>
 	<br>
 	<br>
+	<div class="msnForm"></div>
 	<input type="submit" value="Ingresar">
 </form>
 
@@ -22,4 +23,6 @@ if (isset($_GET["action"]))
 		echo "Usuario y contraseña incorrectos";
 	}
 }
+
 ?>
+

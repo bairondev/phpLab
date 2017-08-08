@@ -12,9 +12,13 @@
 	Correo:
 	<input id="emailR" type="email" name="email" maxlength="30" placeholder="Correo" required/>
 	<br>
+	<br>
+	<div class="terminos">
+		<input id="terminosR" type="checkbox" name="terminos"> Acepto términos y condiciones.
+	</div>
 	<div class="msnForm"></div>
 	<br>
-	<input type="submit" value="Enviar">
+	<input type="submit" value="Enviar 2">
 </form>
 
 <?php
