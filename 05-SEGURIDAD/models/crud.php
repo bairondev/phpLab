@@ -78,7 +78,6 @@ class Datos extends Conexion {
 	public function actualizarUsuarios($datos, $tabla)
 	{
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET usuario = :usuario, password = :password, email = :email WHERE id = :id");
-
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
@@ -115,6 +114,24 @@ class Datos extends Conexion {
 
 	//)- End |-------------------------------------------------------------------------------------------------------#
 
+//#)- Validar Intentos de Usuarios| --------------------------------------------------------------------------------------#
+
+	public function validarIntentos($datos, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET intentos = :intentos WHERE usuario = :usuario");
+		$stmt->bindParam(":intentos", $datos["intentosActual"], PDO::PARAM_INT);
+		$stmt->bindParam(":usuario", $datos["userActual"], PDO::PARAM_STR);
+
+		if( $stmt->execute() ){
+			return "success";
+		} else {
+			return "Error";
+		}
+
+		$stmt->close();
+	}
+
+	//)- End |--------------------------------------------------------------------------------------------------------------#
 }
 
 ?>

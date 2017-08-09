@@ -7,7 +7,7 @@ class MvcController
 {
 
 //#)- Var Globales			| --------------------------------------------------------------------------------------#
-	
+
 	public $expName = '/^[a-zA-Z0-9]*$/';
 	public $expPassword = '/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/';
 	public $expMail = '/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/';
@@ -23,7 +23,7 @@ class MvcController
 	}
 	//)-  	End |------------------------------------------------------------------------------------------------------------#
 
-//#)- Intereacción del Usuario | --------------------------------------------------------------------------------------#
+//#)- Enlaces navegación		 | --------------------------------------------------------------------------------------#
 
 	public function enlacesPaginasController()
 	{
@@ -59,7 +59,7 @@ class MvcController
 						'password' 	=> 	$encriptar,
 						'email' 		=> 	$_POST["email"]
 					 );
-
+				//  Cr.89ABC
 				$respuesta = Datos::registroUsuarioModel($datosController, "usuarios");
 
 				// printVar($respuesta , "Respuesta");
@@ -83,25 +83,39 @@ class MvcController
 	{
 		if(isset($_POST["usuario"]))
 		{
+
+			$encriptar = crypt($_POST["password"], '$2a$07$usesomesillystringforsalt$');
 			$datosController = array(
 					'usuario' 	=>	$_POST["usuario"] ,
-					'password' 	=> 	$_POST["password"]
+					'password' 	=> 	$encriptar
 				 );
 
 			$respuesta = Datos::loginUsuarios($datosController, "usuarios");
 
+			// Validamos las veces que trata de entrar un usuario.
+			$intentos = $respuesta['intentos'];
+			$usuario = $_POST['usuario'];
+			$intMaximos = 2;
 
-			// printVar($respuesta["usuario"] , "Respuesta");
-
-			if($respuesta["usuario"] == $_POST['usuario'] && $respuesta["password"] == $_POST['password'])
+			if($intentos < $intMaximos)
 			{
-				//  Inicializamos la var Seccion para acceder al contenido.
-				session_start();
-				$_SESSION["validar"] = true;
+				// printVar($respuesta["usuario"] , "Respuesta");
+				if($respuesta["usuario"] == $_POST['usuario'] && $respuesta["password"] == $encriptar)
+				{
+					//  Inicializamos la var Seccion para acceder al contenido.
+					session_start();
+					$_SESSION["validar"] = true;
 
-				header("location:index.php?action=usuarios");
-			}else{
-				header ("location:index.php?action=fallo");
+					header("location:index.php?action=usuarios");
+				}else{
+					++$intentos;
+
+					$datos = array('userActual' => $usuario , 'intentosActual' => $intentos );
+
+					$respuesta = Datos::validarIntentos($datos, 'usuarios');
+
+					header ("location:index.php?action=fallo");
+				}
 			}
 		}
 	}
@@ -155,7 +169,7 @@ class MvcController
 			if (isset($_POST['usuarioEditar'])) {
 
 				$encriptar = crypt($_POST["passwordEditar"], '$2a$07$usesomesillystringforsalt$');
-				
+
 				$datos = array(
 						'id' 		=>	$_POST["idEditar"] ,
 						'usuario' 	=>	$_POST["usuarioEditar"] ,

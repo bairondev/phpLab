@@ -18,7 +18,7 @@
 	</div>
 	<div class="msnForm"></div>
 	<br>
-	<input type="submit" value="Enviar 4">
+	<input type="submit" value="Enviar">
 </form>
 
 <?php
@@ -29,9 +29,9 @@
 	{
 		if($_GET["action"] == "ok"){
 			echo "¡Registro Existoso!";
-	}else if($_GET["action"] == "error")
-	{
-		echo "Error al realizar el Registro";
+		}else if($_GET["action"] == "error")
+		{
+			echo "Error al realizar el Registro";
+		}
 	}
-}
 ?>
