@@ -7,8 +7,12 @@ class MvcController
 {
 
 //#)- Var Globales			| --------------------------------------------------------------------------------------#
+	
 	public $expName = '/^[a-zA-Z0-9]*$/';
+	public $expPassword = '/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/';
 	public $expMail = '/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/';
+
+
 	//)- End |----------------------------------------------------------------------------------------------------------------#
 
 //#)- Llamada a la plantilla | ------------------------------------------------------------------------------------------#
@@ -33,7 +37,6 @@ class MvcController
 		$respuesta = EnlacesPaginas::enlacesPaginasModel( $linkController );
 
 		include $respuesta;
-
 	}
 	//)-  	End |--------------------------------------------------------------------------------------------------------#
 
@@ -44,7 +47,7 @@ class MvcController
 		if(isset($_POST["usuario"]))
 		{
 			//  preg_macth(); = Realiza una comparación con una expresión regular.
-			if (preg_match($expName, $_POST["usuario"]) &&  preg_match($expName, $_POST["password"]) && preg_match($expMail, $_POST["email"]))
+			if (preg_match($this->expName, $_POST["usuario"]) && preg_match($this->expPassword, $_POST["password"]) && preg_match($this->expMail, $_POST["email"]))
 			{
 
 				// crypt(); = devolverá el hash de un string utilizando el algoritmo estándar basado en DES de Unix o algoritmos alternativos que puedan estar disponibles en el sistema.
@@ -147,14 +150,16 @@ class MvcController
 
 	public function actualizarUsuariosController ()
 	{
-
-		if (preg_match($expName, $_POST["usuarioEditar"]) &&  preg_match($expName, $_POST["passwordEditar"]) && preg_match($expMail, $_POST["emailEditar"]))
+		if (preg_match($this->expName, $_POST["usuarioEditar"]) &&  preg_match($this->expPassword, $_POST["passwordEditar"]) && preg_match($this->expMail, $_POST["emailEditar"]))
 		{
 			if (isset($_POST['usuarioEditar'])) {
+
+				$encriptar = crypt($_POST["passwordEditar"], '$2a$07$usesomesillystringforsalt$');
+				
 				$datos = array(
 						'id' 		=>	$_POST["idEditar"] ,
 						'usuario' 	=>	$_POST["usuarioEditar"] ,
-						'password' 	=> 	$_POST["passwordEditar"],
+						'password' 	=> 	$encriptar,
 						'email' 		=> 	$_POST["emailEditar"]
 					 );
 
@@ -170,6 +175,7 @@ class MvcController
 			}
 		}
 	}
+
 
 	//)-  	End |------------------------------------------------------------------------------------------------------------#
 

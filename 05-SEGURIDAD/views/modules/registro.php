@@ -18,7 +18,7 @@
 	</div>
 	<div class="msnForm"></div>
 	<br>
-	<input type="submit" value="Enviar 2">
+	<input type="submit" value="Enviar 4">
 </form>
 
 <?php
