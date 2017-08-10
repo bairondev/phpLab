@@ -95,7 +95,7 @@ class MvcController
 			// Validamos las veces que trata de entrar un usuario.
 			$intentos = $respuesta['intentos'];
 			$usuario = $_POST['usuario'];
-			$intMaximos = 2;
+			$intMaximos = 3;
 
 			if($intentos < $intMaximos)
 			{
@@ -105,6 +105,7 @@ class MvcController
 					//  Inicializamos la var Seccion para acceder al contenido.
 					session_start();
 					$_SESSION["validar"] = true;
+
 
 					header("location:index.php?action=usuarios");
 				}else{
@@ -116,8 +117,13 @@ class MvcController
 
 					header ("location:index.php?action=fallo");
 				}
+			}else{
+				
+					$respuesta = Datos::validarIntentos($datos, 'usuarios');
+					$datos = array('userActual' => $usuario , 'intentosActual' => 0 );
 			}
 		}
+
 	}
 	//)-  	End |------------------------------------------------------------------------------------------------------------#
 

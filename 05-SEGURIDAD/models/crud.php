@@ -33,7 +33,7 @@ class Datos extends Conexion {
 
 	public function loginUsuarios($datos, $tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT usuario, password FROM $tabla WHERE usuario = :usuario");
+		$stmt = Conexion::conectar()->prepare("SELECT usuario, password, intentos FROM $tabla WHERE usuario = :usuario");
 		$stmt -> bindParam("usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt -> execute();
 
@@ -128,7 +128,6 @@ class Datos extends Conexion {
 			return "Error";
 		}
 
-		$stmt->close();
 	}
 
 	//)- End |--------------------------------------------------------------------------------------------------------------#
