@@ -1,0 +1,10 @@
+#Impedir navegar por los directorios de la App
+
+Options All -Indexes
+
+# Crear URLs Amigables
+# Activar RewriteEngine
+
+RewriteEngine on
+
+RewriteRule ^(\w+)$ index.php?action=$1

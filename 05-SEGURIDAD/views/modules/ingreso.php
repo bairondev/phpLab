@@ -22,6 +22,9 @@ if (isset($_GET["action"]))
 	if($_GET["action"] == "fallo"){
 		echo "Usuario y contraseña incorrectos";
 	}
+	if($_GET["action"] == "fallo2"){
+		echo "Lo sentimos acaba de abusar del número de intentos, favor llenar el siguiente captcha";
+	}
 }
 
 ?>

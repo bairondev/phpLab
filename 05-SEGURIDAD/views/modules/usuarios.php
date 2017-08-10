@@ -3,7 +3,7 @@
 
 	if(!$_SESSION["validar"])
 	{
-		header("location:index.php?action=ingreso");
+		header("location:ingreso");
 		exit();
 	}
 ?>

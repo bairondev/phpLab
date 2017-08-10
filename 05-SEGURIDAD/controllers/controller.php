@@ -66,12 +66,12 @@ class MvcController
 
 				if($respuesta == "success")
 				{
-					header("location:index.php?action=ok");
+					header("location:ok");
 				}else{
 					header ("location:registro.php");
 				}
 			}else{
-				header("location:index.php?action=error");
+				header("location:error");
 			}
 		}
 	}
@@ -105,22 +105,28 @@ class MvcController
 					//  Inicializamos la var Seccion para acceder al contenido.
 					session_start();
 					$_SESSION["validar"] = true;
+					//  Reiniciamos la cantidad de intentos del usuario
+					$datos = array('userActual' => $usuario , 'intentosActual' => 0 );
+					$respuestaIntentos = Datos::validarIntentos($datos, 'usuarios');
 
-
-					header("location:index.php?action=usuarios");
+					header("location:usuarios");
 				}else{
 					++$intentos;
 
 					$datos = array('userActual' => $usuario , 'intentosActual' => $intentos );
 
-					$respuesta = Datos::validarIntentos($datos, 'usuarios');
+					$respuestaIntentos = Datos::validarIntentos($datos, 'usuarios');
 
-					header ("location:index.php?action=fallo");
+					header ("location:fallo");
 				}
 			}else{
-				
-					$respuesta = Datos::validarIntentos($datos, 'usuarios');
-					$datos = array('userActual' => $usuario , 'intentosActual' => 0 );
+
+				//  Reiniciamos la cantidad de intentos del usuario
+
+				$datos = array('userActual' => $usuario , 'intentosActual' => 0 );
+				$respuestaIntentos = Datos::validarIntentos($datos, 'usuarios');
+
+				header ("location:fallo2");
 			}
 		}
 
@@ -187,7 +193,7 @@ class MvcController
 
 				if($respuesta == "success")
 				{
-					header("location:index.php?action=cambio");
+					header("location:cambio");
 				}else{
 					echo "Error al actualizar Dato";
 				}
@@ -212,7 +218,7 @@ class MvcController
 
 			if($respuesta == "success")
 			{
-				header("location:index.php?action=eliminado");
+				header("location:eliminado");
 			}else{
 				echo "Error al actualizar Dato";
 			}
@@ -221,4 +227,3 @@ class MvcController
 	}
 	//)-  	End |------------------------------------------------------------------------------------------------------------#
 }
-?>

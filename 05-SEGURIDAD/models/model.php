@@ -37,6 +37,10 @@ class EnlacesPaginas{
 			$module = "views/modules/ingreso.php";
 
 		}
+		else if ($linkModel == "fallo2")
+		{
+			$module = "views/modules/ingreso.php";
+		}
 		else if ($linkModel == "editar")
 		{
 
@@ -71,4 +75,3 @@ class EnlacesPaginas{
 
 	}
 }
-?>
